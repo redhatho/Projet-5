@@ -8,7 +8,7 @@ let colorOption = document.querySelector("#colors");
 
 function getApiProducts() {
 
-  //test d'insertion des éléments (ne fonctionne pas)
+  //insertion des éléments 
   let imageAlt = document.querySelector("article div.item__img");
   let titre = document.querySelector("#title");
   let price = document.querySelector("#price");
@@ -112,29 +112,7 @@ fetch("http://localhost:3000/api/products/" + idProduct)
 
           };
 
-          /* ETAPE 1
-          vérifier qu'une color et une quantité sont choisi avant de créer l'objet selectedProduct => une alerte
-          ajouter selectedProduct dans un tableau qui contiendra tout les produits
-          ajouter le tableau dans le localStorage
-          
-        
-
-
-          */ 
-         /* ETAPE 2
-         Après le condition color/quantité
-         vérifié si l'ID + la color du produit selectionner par l'utilisateur existe déjà dans le panier
-         find() *
-         findInex()
-         filter()
          
-         
-         */
-        /* ETAPE 3
-        SI le produit (id +color) n'existe pas dans le panier => l'ajouter au panier
-        SI le produit (id + color) existe =W additionner les quantités
-        
-        */
           console.log(selectedProduct)
         })
         
