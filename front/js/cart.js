@@ -1,6 +1,6 @@
-let productLocalStorage = JSON.parse(localStorage.getItem("article"));
+let productLocalStorage = JSON.parse(localStorage.getItem('article'));
 console.log(productLocalStorage);
-const getEmptyCart = getElementById("#art__items");
+const getEmptyCart = document.getElementById('cart__items');
 
 //Si le panier est vide
 function fillCart() {
@@ -8,7 +8,7 @@ function fillCart() {
         const emptyCart = '<p>Votre panier est vide</p>';
         getEmptyCart.innerHTML = emptyCart;
     
-    //Si le panier contient des éléments, on les insèrent    
+    //Si le panier contient des éléments, on les insère    
     } else {
         for(let product of productLocalStorage) {
             document.getElementById('cart__items').innerHTML+= `<article class="cart__item" data-id="${productLocalStorage[product].idArticle}" data-color="{product-color}">
@@ -36,3 +36,30 @@ function fillCart() {
     }
 }
 
+//Total des quantités
+
+function totalProduct() {
+  let elementQuantity = document.getElementsByClassName('itemQuantity');
+  let productLength = elementQuantity.length;
+  totalProduct = 0;
+
+
+  for (let i = 0; i < productLength; i++) {
+    totalProduct += elementQuantity[i].valueAsNumber;
+  }
+
+  let getTotalQuantity = document.getElementsByClassName('totalQuantity');
+  getTotalQuantity.innerHTML = totalProduct;
+  console.log(totalProduct);
+
+//le prix total est récupéré
+
+  priceTotal = 0;
+  for (let i = 0; i < productLength; ++i) {
+    priceTotal += (elementQuantity[i].valueAsNumber * productLocalStorage[i].priceArticle);
+  }
+
+  let getProductTotalPrice = document.getElementById('totalPrice');
+  getProductTotalPrice.innerHTML = priceTotal;
+  console.log(priceTotal);
+}
