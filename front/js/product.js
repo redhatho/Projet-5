@@ -8,33 +8,7 @@ let product = '';
 const quantityProduct = document.getElementById('quantity')
 let colorOption = document.getElementById("colors");
 
-function getApiProducts() {
 
-  //insertion des éléments 
-  let imageAlt = document.querySelector("article div.item__img");
-  let titre = document.getElementById("title");
-  let price = document.getElementById("price");
-  let description = document.getElementById("description");
-  
-
-  // Insertion de l'image
-  imageAlt.innerHTML = `<img src="${product.imageUrl}" alt="${product.altTxt}">`;
-
-  // titre "h1"
-  titre.textContent = `${product.name}`;
-
-  // le prix
-  price.textContent = `${product.price}`;
-
-  // la description
-  description.textContent = `${product.description}`;
-
-  // Insertion des options de couleurs par une boucle for
-  for (let color of product.colors) {
-      colorOption.innerHTML += `<option value="${color}">${color}</option>`;
-  }
-
-}
 
 //Récupération de l'Api et de l'Id du produit
 fetch("http://localhost:3000/api/products/" + idProduct)
@@ -43,9 +17,39 @@ fetch("http://localhost:3000/api/products/" + idProduct)
         product = productFromApi;
         getApiProducts();
         console.table(productFromApi);
-        let addProduct =  document.getElementById("addToCart");
-     
+
+        function getApiProducts() {
+
+          //insertion des éléments 
+          let imageAlt = document.querySelector("article div.item__img");
+          let titre = document.getElementById("title");
+          let price = document.getElementById("price");
+          let description = document.getElementById("description");
+          
         
+          // Insertion de l'image
+          imageAlt.innerHTML = `<img src="${product.imageUrl}" alt="${product.altTxt}">`;
+        
+          // titre "h1"
+          titre.textContent = `${product.name}`;
+        
+          // le prix
+          price.textContent = `${product.price}`;
+        
+          // la description
+          description.textContent = `${product.description}`;
+        
+          // Insertion des options de couleurs par une boucle for
+          for (let color of product.colors) {
+              colorOption.innerHTML += `<option value="${color}">${color}</option>`;
+          }
+          //On appelle la fonction clickProduct
+          clickProduct(product);
+        }
+        
+        function clickProduct(product) {
+        let addProduct =  document.getElementById("addToCart");
+        //Ajout de l'évènement
         addProduct.addEventListener("click", () => {
           
           let qts = quantityProduct.value;
@@ -84,44 +88,39 @@ fetch("http://localhost:3000/api/products/" + idProduct)
               }
             };
 
-          if(productLocalStorage) {
-            const resultFind = productLocalStorage.find(
-              (el) => el.idArticle === idProduct && el.colorArticle === color);
+        if (productLocalStorage) {
+          const resultFind = productLocalStorage.find(
+          (el) => el.idArticle === idProduct && el.colorArticle === color);
+        if (resultFind) {
+          //S'il y a déjà un même produit avec une même couleur
+          let totalQuantity = parseInt(selectedProduct.quantityArticle) + parseInt(resultFind.quantityArticle);
+          resultFind.quantityArticle = totalQuantity;
+          localStorage.setItem('article', JSON.stringify(productLocalStorage));
+          alertConfirmation();
+        } else {
 
-              if(resultFind) {
-                //S'il y a déjà un même produit avec une même couleur
-                let totalQuantity = parseInt(selectedProduct.quantityArticle) + parseInt(resultFind.quantityArticle);
-                resultFind.quantityArticle = totalQuantity;
-                localStorage.setItem('article', JSON.stringify(productLocalStorage));
-                alertConfirmation();
-              }
-          } else {
-            //S'il n'y a rien dans le panier
-            productLocalStorage = [];
-            //On insère les éléments du local storage dans le tableau
-            localStorage.setItem('article', JSON.stringify(productLocalStorage));
-                alertConfirmation();
-          }
+          //Si le produit est différent de ceux qui ont déjà été commandée
+          productLocalStorage.push(selectedProduct);
+          localStorage.setItem('article', JSON.stringify(productLocalStorage));
+          alertConfirmation();
+        }
+      } else {
+        //S'il n'y a rien dans le panier
+        productLocalStorage = [];
+        //On push les informations du localStorage dans le array
+        productLocalStorage.push(selectedProduct);
+        localStorage.setItem('article', JSON.stringify(productLocalStorage));
+        alertConfirmation();
+      }
 
         }
 
             
-          
-
-
-         
-
-         
-          console.log(selectedProduct)
-        })
-        
-    })
+        })      
+    }
+    
+  })
     .catch (function(error){
         return error;
     });
 
-    
-
-
-
-    
