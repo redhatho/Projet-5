@@ -241,16 +241,14 @@ function orderSurvey() {
       };
       //On récupère l'api et ce qu'il y a a poster
       fetch('http://localhost:3000/api/products/order', postOptions)
-        .then((res) => {
-          return res.json();
-        })
+      .then(response => response.json())
         .then((data) => {
           const orderId = data.orderId;
           //Et on renvoi vers la page de confirmation
           window.location.href = 'confirmation.html' + '?orderId=' + orderId;
         })
-        .catch((error) => {
-          alert(error);
+        .catch (function(error){
+          return error;
       });
 
     }
