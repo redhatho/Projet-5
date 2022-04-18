@@ -203,7 +203,7 @@ function orderSurvey() {
     action.preventDefault();
 
     if(!productLocalStorage) {
-      altert('Votre panier est vide, veuillez sélectionner un article pour passer votre commande');
+      alert('Votre panier est vide, veuillez sélectionner un article pour passer votre commande');
     }
 
     //Si le formulaire n'est pas rempli correctement on créer une alerte
