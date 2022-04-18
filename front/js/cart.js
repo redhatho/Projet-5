@@ -184,7 +184,7 @@ function getSurvey() {
   });
 
   //Email
-  let email = document.getElementById('firstName');
+  let email = document.getElementById('email');
   email.addEventListener('input', function() {
     if(emailRegex.test(email.value) === false) {
       document.getElementById('emailErrorMsg').textContent = "Le format de l'email est incorrect";
@@ -203,7 +203,7 @@ function orderSurvey() {
     action.preventDefault();
 
     if(!productLocalStorage) {
-      altert('Botre panier est vide, veuillez sélectionner un article pour passer votre commande');
+      altert('Votre panier est vide, veuillez sélectionner un article pour passer votre commande');
     }
 
     //Si le formulaire n'est pas rempli correctement on créer une alerte
@@ -229,7 +229,8 @@ function orderSurvey() {
         products: finalProduct,
       };
       console.log(infoClient);
-      //option de la method post fetch
+
+      //On initie la fonction "Post"
       const postOptions = {
         method: 'POST',
         body: JSON.stringify(infoClient),
