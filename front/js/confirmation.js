@@ -1,4 +1,4 @@
-//On récupère la commande via le local storage
+//On récupère la commande
 const str = window.location.href;
 const url = new URL(str);
 const orderId = url.searchParams.get("orderId");
@@ -9,4 +9,4 @@ productOrder.innerHTML = orderId + '<br> Merci de votre commande !';
 
 //Supression du local Storage une fois la commande passée
 let removeLocalStorage = window.localStorage;
-removeLocalStorage.clear();
+removeLocalStorage.removeItem('article');
